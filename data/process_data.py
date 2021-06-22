@@ -67,10 +67,13 @@ def clean_data(df):
     return df
 
 def save_data(df, database_filename):
+    # input df
+    # output database file containing table 'DisasterResponses'
     engine = create_engine('sqlite:///' + database_filename)
     df.to_sql('DisasterResponses', engine, if_exists='replace', index=False)
 
 def main():
+    # main script for running modules defined above
     if len(sys.argv) == 4:
 
         messages_filepath, categories_filepath, database_filepath = sys.argv[1:]
