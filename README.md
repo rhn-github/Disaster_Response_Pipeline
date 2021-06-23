@@ -49,7 +49,9 @@ The output of the analysis can be seen in a web app with visualisations as follo
   - main page of web app
 * go.html
   - classification result page of web app
-#### ...\additional_files
+#### ...\additional_information
+* ML Pipeline Preparation.html
+  - Jupyter Notebook HTML Download showing result of 5 Parameter GridSearchCV optimizataion
 
 <a id='instructs'></a>
 ### Instructions for Use:
