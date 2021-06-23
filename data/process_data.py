@@ -3,11 +3,11 @@ import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine
 
-
 def load_data(messages_filepath, categories_filepath):
+    # Function for loading & merging data from csv files
     # Inputs
-        # disaster_messages.csv from messages_filepath
-        # disaster_categories.csv from categories_filepath
+        # messages.csv from messages_filepath
+        # categories.csv from categories_filepath
     # Output
         # pandas df merging messages and categories
     messages =  pd.read_csv(messages_filepath)
@@ -18,7 +18,7 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
-
+    # function for cleaning the data categories and organising them into individual columns
     # Input
     # - dataframe df
     # Output
@@ -66,16 +66,20 @@ def clean_data(df):
         
     return df
 
+
 def save_data(df, database_filename):
-    # input df
-    # output database file containing table 'DisasterResponses'
-    engine = create_engine('sqlite:///' + database_filename)
-    df.to_sql('DisasterResponses', engine, if_exists='replace', index=False)
+    # function to save dataframe as database file
+    # input dataframe df
+    # output database file containing table 'DisasterResponse'
+    engine = create_engine('sqlite:///{}'.format(database_filename))
+    df.to_sql('DisasterResponse', engine, if_exists='replace', index=False)
+
+
 
 def main():
-    # main script for running modules defined above
+    # main operating function in script
     if len(sys.argv) == 4:
-
+        # define filepaths using contents execution statement
         messages_filepath, categories_filepath, database_filepath = sys.argv[1:]
 
         print('Loading data...\n    MESSAGES: {}\n    CATEGORIES: {}'
