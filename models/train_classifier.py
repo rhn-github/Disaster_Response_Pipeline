@@ -120,7 +120,7 @@ def main():
         print('Building model...')
         model = build_model()
         
-        print('Training Classifier...')
+        print('Training classifier...')
         model.fit(X_train, y_train)
         
         print('Evaluating model...')
