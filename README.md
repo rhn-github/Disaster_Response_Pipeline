@@ -58,7 +58,7 @@ The output of the analysis can be seen in a web app with visualisations as follo
 * in `\app` create another subfolder `\templates`
 * from this repository copy the contents of the folders `app`, `data`, and `models` to the corresponding sub-folders in the Project Directory
 
-2. Run the following commands in the project's root directory to set up the database *DisasterResponse.db* and model *classifier.py*. Note that sample versions of these two files are also provided in this GitHub repository.
+2. Open a workspace terminal and run the following commands in the project's root directory to set up the database *DisasterResponse.db* and model *classifier.py*. Note that sample versions of these two files are also provided in this GitHub repository.
 
     - To run ETL pipeline that cleans data and stores in database
         `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
@@ -68,7 +68,16 @@ The output of the analysis can be seen in a web app with visualisations as follo
 2. Run the following command in the app's directory to run your web app.
     `python run.py`
 
+3. Open a new workspace terminal and run
+    `env|grep WORK`
+
+4. note the Ouput values for *SPACEID* and *SPACEDOMAIN*
+
+5. Use these values to complete the address *`https://SPACEID-3001.SPACEDOMAIN`* and open a new Web Page in the browser with this address to access the Application.
+
 4. Go to http://0.0.0.0:3001/
+
+
 
 <a id='params'></a>
 ### Notes on Parameter Selection in GridSearchCV
