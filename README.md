@@ -1,4 +1,4 @@
-# Disaster_Response_Pipeline
+# Disaster Response Pipeline
 Udacity Nanodegree Data Scientist, Disaster Response Pipeline Project
 
 [1. Introduction](#intro)<br>
