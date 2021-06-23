@@ -1,5 +1,5 @@
 # Disaster Response Pipeline
-Udacity Nanodegree Data Scientist, Disaster Response Pipeline Project
+Repository for Project Number 2 in the Udacity Data Science Course
 
 [1. Introduction](#intro)<br>
 [2. Repository Contents](#contents)<br>
