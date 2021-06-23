@@ -112,10 +112,10 @@ def main():
     if len(sys.argv) == 3:
         database_filepath, model_filepath = sys.argv[1:]
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))
-        X, Y, category_names = load_data()
+        X, y, category_names = load_data()
         
         print('Splitting data into train and test sets...')
-        X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
         
         print('Building model...')
         model = build_model()
