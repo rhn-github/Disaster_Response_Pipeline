@@ -4,12 +4,12 @@ import numpy as np
 from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
-    # Function for loading & merging data from csv files
-    # Inputs
-        # messages.csv from messages_filepath
-        # categories.csv from categories_filepath
-    # Output
-        # pandas df merging messages and categories
+    """
+    Function for loading & merging data from csv files
+    - read messages.csv from messages_filepath
+    - read categories.csv from categories_filepath
+    - creating pandas df merging messages and categories
+    """
     messages =  pd.read_csv(messages_filepath)
     categories =  pd.read_csv(categories_filepath)
     df = pd.merge(messages, categories, on="id", how="outer", indicator=True)
@@ -19,17 +19,18 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
-    # function for cleaning the data categories and organising them into individual columns
-    # Input
-    # - dataframe df
-    # Output
-    # - dataframe df with one column for each category
-    #   and column values 1 or 0 for each row 
-    #   depending on the categrories listed in each row
-    #   in the original df.categories column
-    # - resulting dataframe cleaned to remove duplicates
-    # - column values verified to be 1 or 0 only
-    
+    """
+    Function for cleaning the data categories and organising them into individual columns:
+    In
+     - dataframe df
+    Out
+     - dataframe df with one column for each category
+       and column values 1 or 0 for each row 
+       depending on the categrories listed in each row
+       in the original df.categories column
+     - resulting dataframe cleaned to remove duplicates
+     - column values verified to be 1 or 0 only
+    """
     # create a dataframe of the 36 individual category columns
     categories = df.categories.str.split(";", expand=True)
     
@@ -69,16 +70,17 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
-    # function to save dataframe as database file
-    # input dataframe df
-    # output database file containing table 'DisasterResponse'
+    """
+    Function to save dataframe as database file:
+    - in dataframe df
+    - out database file containing table 'DisasterResponse'
+    """
     engine = create_engine('sqlite:///{}'.format(database_filename))
     df.to_sql('DisasterResponse', engine, if_exists='replace', index=False)
 
 
-
 def main():
-    # main operating function in script
+    """Main operating function in script:"""
     if len(sys.argv) == 4:
         # define filepaths using contents execution statement
         messages_filepath, categories_filepath, database_filepath = sys.argv[1:]
@@ -102,7 +104,6 @@ def main():
               'to as the third argument. \n\nExample: python process_data.py '\
               'disaster_messages.csv disaster_categories.csv '\
               'DisasterResponse.db')
-
 
 if __name__ == '__main__':
     main()
