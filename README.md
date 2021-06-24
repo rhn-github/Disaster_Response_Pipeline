@@ -41,6 +41,10 @@ The output of the analysis can be seen in a web app with visualisations as follo
     - Trains and tunes a model using GridSearchCV
     - Outputs results on the test set
     - Exports the final model as a pickle file *classifier.pkl*
+  - classifier.pkl
+    - Pickle file based on basic GridSearchCV model
+  - classifier_p.pkl
+    - Pickle file based on basic pipeline model
 #### ...\app
 * run.py
   - a Flask file that runs app
