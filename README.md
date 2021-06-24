@@ -67,17 +67,21 @@ The output of the analysis can be seen in a web app with visualisations as follo
     - To run ML pipeline that trains classifier and saves
         `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`
 
-2. Run the following command in the app's directory to run your web app.
+3. Run the following command in the app's directory to run your web app.
     `python run.py`
 
-3. Open a new workspace terminal and run
+Accessing the WebApp if using Udacity Workspace IDE:
+
+1. Open a new workspace terminal and run
     `env|grep WORK`
 
 4. note the Ouput values for *SPACEID* and *SPACEDOMAIN*
 
-5. Use these values to complete the address *`https://SPACEID-3001.SPACEDOMAIN`* and open a new Web Page in the browser with this address to access the Application.
+3. Use these values to complete the address *`https://SPACEID-3001.SPACEDOMAIN`* and open a new Web Page in the browser with this address to access the Application.
 
-4. Go to http://0.0.0.0:3001/
+Accessing the WebApp if using Local Machine:
+
+1. Go to http://0.0.0.0:3001/
 
 
 
