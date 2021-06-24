@@ -7,7 +7,7 @@ from nltk.tokenize import word_tokenize
 
 from flask import Flask
 from flask import render_template, request, jsonify
-from plotly.graph_objs import Bar
+from plotly.graph_objs import Bar, Pie
 from sklearn.externals import joblib
 from sqlalchemy import create_engine
 
@@ -15,12 +15,17 @@ from sqlalchemy import create_engine
 app = Flask(__name__)
 
 def tokenize(text):
-    tokens = word_tokenize(text)
-    lemmatizer = WordNetLemmatizer()
-
+    # tokenize text
+    text = re.sub(r"[^a-zA-Z0-9]", " ", text)
+    tokens = word_tokenize(text)     
+    tokens = [t for t in tokens if t not in stopwords.words("english")]                 
+    # initiate lemmatizer
+    lemmatizer = WordNetLemmatizer() 
+    # iterate through each token
     clean_tokens = []
-    for tok in tokens:
-        clean_tok = lemmatizer.lemmatize(tok).lower().strip()
+    for tok in tokens:               
+        # lemmatize, normalize case, and remove leading/trailing white space
+        clean_tok = lemmatizer.lemmatize(tok).lower().strip()     
         clean_tokens.append(clean_tok)
 
     return clean_tokens
@@ -31,9 +36,9 @@ df = pd.read_sql_table('DisasterResponse', engine)
 
 # load model
 # real model from GridSearchCV classifier
-#model = joblib.load("../models/classifier.pkl")
+model = joblib.load("../models/classifier.pkl")
 # test model from pipeline classifier
-model = joblib.load("../models/classifier_p.pkl")
+#model = joblib.load("../models/classifier_p.pkl")
 
 # index webpage displays cool visuals and receives user input text for model
 @app.route('/')
@@ -41,47 +46,74 @@ model = joblib.load("../models/classifier_p.pkl")
 def index():
     
     # extract data needed for visuals
-    # TODO: Below is an example - modify to extract data for your own visuals
+    
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     
+    # dataframe summing values of category columns
+    category = df.iloc[:-1, 4:]
+    category_sum = category.sum().sort_values(ascending = False)
+    categories = list(category_sum.index)
+    
+    # top 10
+    category_sum_10 = category_sum[:10]
+    categories_10 = categories[:10]
+    # rest
+    category_sum_rest = category_sum[10:].sum()
+    # create new series top 10 classes plu the rest
+    values_top_rest = pd.Series(category_sum_10).append(pd.Series(category_sum_rest))
+    categs_top_rest = pd.Series(categories_10).append(pd.Series(['rest']))
+    
+    
     # create visuals
-    # TODO: Below is an example - modify to create your own visuals
     graphs = [
+        # Pie Chart Genres
         {
             'data': [
-                Bar(
-                    x=genre_names,
-                    y=genre_counts
+                Pie(
+                    labels=genre_names,
+                    values=genre_counts,
+                    hoverinfo='label+percent'
                 )
             ],
 
             'layout': {
                 'title': 'Distribution of Message Genres',
+                
+            }
+        },
+        # Bar Chart Categories Ranking
+        {
+            'data': [
+                Bar(
+                    x=categories,
+                    y=category_sum
+                )
+            ],
+
+            'layout': {
+                'title': 'Ranking of Categories',
                 'yaxis': {
                     'title': "Count"
                 },
                 'xaxis': {
-                    'title': "Genre"
+                    'title': ""
                 }
             }
         },
+        # Pie Chart top 10 Categories vs Rest
         {
             'data': [
-                Bar(
-                    x=genre_names,
-                    y=genre_counts
+                Pie(
+                    labels=categs_top_rest,
+                    values=values_top_rest,
+                    hoverinfo='label+percent'
                 )
             ],
 
             'layout': {
-                'title': 'Distribution of Message Genres',
-                'yaxis': {
-                    'title': "Count"
-                },
-                'xaxis': {
-                    'title': "Genre"
-                }
+                'title': 'Top 10 Categories vs Rest',
+                
             }
         }
     ]
