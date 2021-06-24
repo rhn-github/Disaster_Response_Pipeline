@@ -80,7 +80,7 @@ Additionally the web app presents information from the Test Data with visualisat
 * in `\app` create another subfolder `\templates`
 * from this repository copy the contents of the folders `app`, `data`, and `models` to the corresponding sub-folders in the Project Directory
 
-2. Open a workspace terminal and run the following commands in the project's root directory to set up the database *DisasterResponse.db* and model *classifier.py*. Note that sample versions of these two files are also provided in this GitHub repository.
+2. Open a workspace terminal and run the following commands in the project's root directory to set up the database *DisasterResponse.db* and model *classifier.pkl*. Note that a sample version of *DisasterResponse.db* is also provided in this GitHub repository.
 
     - To run ETL pipeline that cleans data and stores in database
         `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
