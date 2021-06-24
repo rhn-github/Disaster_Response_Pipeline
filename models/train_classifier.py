@@ -79,14 +79,14 @@ def build_model():
         'clf__estimator__min_samples_split': [2, 4]
         }
     # define GridSearchCV optimisation
-    #model = GridSearchCV(pipeline, param_grid=parameters, verbose = 3)
+    model = GridSearchCV(pipeline, param_grid=parameters)
     
     """
     Code Line for returning secondary basic pipeline model:
     - trains quicker than GridSearchCV, used for debugging rest of code
-    - return commented out in production version as GridSearchCV to be used
+    - definition commented out in production version as GridSearchCV to be used
     """
-    model = pipeline
+    #model = pipeline
 
     return model
 
