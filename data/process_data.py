@@ -13,6 +13,7 @@ def load_data(messages_filepath, categories_filepath):
     messages =  pd.read_csv(messages_filepath)
     categories =  pd.read_csv(categories_filepath)
     df = pd.merge(messages, categories, on="id", how="outer", indicator=True)
+    df.drop(['_merge'], axis=1, inplace=True)
     
     return df
 
