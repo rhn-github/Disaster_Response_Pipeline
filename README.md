@@ -97,7 +97,7 @@ Results for 2 Parameters (may vary if models re-run)
          
 | model |   | precision | recall | f1-score | support |
 |----|----|----|----|----|----|
-| basic pipeline | avg / total | 0.74 | 0.49 | 0.55 | 21006 |
+| basic pipeline | avg / total | 0.73 | 0.49 | 0.54 | 16212 |
 | GridSearchCV | avg / total | 0.74 | 0.49 | 0.55 | 21006 |
 
 During development a second parameter optimisation was attempted , optimising 5 parameters: 
