@@ -2,13 +2,8 @@ import json
 import plotly
 import pandas as pd
 
-import re
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
-import nltk
-nltk.download(['punkt', 'wordnet', 'stopwords'])
 
 from flask import Flask
 from flask import render_template, request, jsonify
@@ -19,9 +14,6 @@ from sqlalchemy import create_engine
 
 app = Flask(__name__)
 
-
-"""
-# As supplied tokenizer function:
 def tokenize(text):
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
@@ -32,29 +24,16 @@ def tokenize(text):
         clean_tokens.append(clean_tok)
 
     return clean_tokens
-"""
-# tokenize text function from train_classifier.py
-def tokenize(text):  
-    text = re.sub(r"[^a-zA-Z0-9]", " ", text)
-    tokens = word_tokenize(text)
-    tokens = [t for t in tokens if t not in stopwords.words("english")]                 
-    # initiate lemmatizer
-    lemmatizer = WordNetLemmatizer() 
-    # iterate through each token
-    clean_tokens = []
-    for tok in tokens:               
-        # lemmatize, normalize case, and remove leading/trailing white space
-        clean_tok = lemmatizer.lemmatize(tok).lower().strip()     
-        clean_tokens.append(clean_tok)
-
-    return clean_tokens
 
 # load data
 engine = create_engine('sqlite:///../data/DisasterResponse.db')
 df = pd.read_sql_table('DisasterResponse', engine)
 
 # load model
-model = joblib.load("../models/classifier.pkl")
+# real model from GridSearchCV classifier
+#model = joblib.load("../models/classifier.pkl")
+# test model from pipeline classifier
+model = joblib.load("../models/classifier_p.pkl")
 
 # index webpage displays cool visuals and receives user input text for model
 @app.route('/')
@@ -62,11 +41,31 @@ model = joblib.load("../models/classifier.pkl")
 def index():
     
     # extract data needed for visuals
+    # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     
     # create visuals
+    # TODO: Below is an example - modify to create your own visuals
     graphs = [
+        {
+            'data': [
+                Bar(
+                    x=genre_names,
+                    y=genre_counts
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of Message Genres',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Genre"
+                }
+            }
+        },
         {
             'data': [
                 Bar(
@@ -86,13 +85,14 @@ def index():
             }
         }
     ]
- 
+    
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
     
     # render web page with plotly graphs
     return render_template('master.html', ids=ids, graphJSON=graphJSON)
+
 
 # web page that handles user query and displays model results
 @app.route('/go')
@@ -115,6 +115,6 @@ def go():
 def main():
     app.run(host='0.0.0.0', port=3001, debug=True)
 
-    
+
 if __name__ == '__main__':
     main()
