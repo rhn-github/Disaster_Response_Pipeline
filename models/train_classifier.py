@@ -1,3 +1,6 @@
+"""
+Import Libraries:
+"""
 import sys
 # for loading data
 import pandas as pd
@@ -31,11 +34,17 @@ from sklearn.model_selection import GridSearchCV
 # for model export
 import pickle
 
+"""
+Supporting Functions:
+- for use in Main Function at end of Script
+"""
+
 def load_data():
-    # Input
-    # - read csv files
-    # Output
-    # - X, y, category names for use in later functions
+    """
+    Function for loading data:
+    - csv files read in pd.dataframes
+    - X, y, category names generated for use in later functions
+    """
     database_filepath = sys.argv[1]
     engine = create_engine('sqlite:///' + database_filepath)
     df = pd.read_sql("SELECT * FROM DisasterResponse", engine)
@@ -44,28 +53,20 @@ def load_data():
     category_names = list(df.columns)[4:]
     return X, y, category_names
 
-
 def tokenize(text):
-    # tokenize text
-    text = re.sub(r"[^a-zA-Z0-9]", " ", text)
-    tokens = word_tokenize(text)     
-    tokens = [t for t in tokens if t not in stopwords.words("english")]                 
-    # initiate lemmatizer
-    lemmatizer = WordNetLemmatizer() 
-    # iterate through each token
+    tokens = word_tokenize(text)
+    lemmatizer = WordNetLemmatizer()
+
     clean_tokens = []
-    for tok in tokens:               
-        # lemmatize, normalize case, and remove leading/trailing white space
-        clean_tok = lemmatizer.lemmatize(tok).lower().strip()     
+    for tok in tokens:
+        clean_tok = lemmatizer.lemmatize(tok).lower().strip()
         clean_tokens.append(clean_tok)
 
     return clean_tokens
 
+
 def build_model():
-    # Input
-    # - no user input, pre-definitions
-    # Output
-    # - GridSearchCV ML Model
+    """Function to build GridSearchCV ML Model:"""    
     # define basic pipeline model
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
@@ -78,36 +79,47 @@ def build_model():
         'clf__estimator__min_samples_split': [2, 4]
         }
     # define GridSearchCV optimisation
-    model = GridSearchCV(pipeline, param_grid=parameters)
+    #model = GridSearchCV(pipeline, param_grid=parameters, verbose = 3)
     
-    # secondary basic pipeline model 
-    # trains quicker than GridSearchCV, used for debugging rest of code
-    # return commented out in production version as GridSearchCV to be used
-    #model = pipeline
+    """
+    Code Line for returning secondary basic pipeline model:
+    - trains quicker than GridSearchCV, used for debugging rest of code
+    - return commented out in production version as GridSearchCV to be used
+    """
+    model = pipeline
 
     return model
 
 
 def evaluate_model(model, X_test, y_test, category_names):
-    # Input
-    # - model from build_model() function.
-    # - X_test from main script.
-    # Output
-    # - classification_report for model
+    """
+    Function for Evaluating ML Model using classification Report:
+    - model from build_model() function.
+    - X_test from main script.
+    """
     # predict on test data
     y_pred = model.predict(X_test)
     # print report    
     print(classification_report(y_test,y_pred,target_names=category_names))
 
 def save_model(model, model_filepath):
-    # Input
-    # - model from build_model() function.
-    # Output
-    # - exported pkl file for model
+    """
+    Function for saving model as pickle file:
+    """
     model_filepath = sys.argv[2]
-    model = build_model()
     pickle.dump(model,open(model_filepath, "wb"))
-
+    """
+    Code Line for saving secondary basic pipeline model as pickle file:
+    - trains quicker than GridSearchCV, used for debugging rest of code
+    - commented out in production version as GridSearchCV to be used
+    """
+    #pickle.dump(model,open('models/classifier_p.pkl', "wb"))
+    
+    
+    
+"""
+Main Function for Tarining and Sving Classifier:
+"""
     
 def main():
     if len(sys.argv) == 3:
