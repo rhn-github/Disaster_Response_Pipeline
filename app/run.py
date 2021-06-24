@@ -2,8 +2,12 @@ import json
 import plotly
 import pandas as pd
 
-from nltk.stem import WordNetLemmatizer
+import re
+from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
+import nltk
+nltk.download(['punkt', 'wordnet', 'stopwords'])
 
 from flask import Flask
 from flask import render_template, request, jsonify
@@ -15,7 +19,7 @@ from sqlalchemy import create_engine
 app = Flask(__name__)
 
 def tokenize(text):
-    # tokenize text
+    """Function to tokenize text in inputted message"""
     text = re.sub(r"[^a-zA-Z0-9]", " ", text)
     tokens = word_tokenize(text)     
     tokens = [t for t in tokens if t not in stopwords.words("english")]                 
@@ -30,17 +34,17 @@ def tokenize(text):
 
     return clean_tokens
 
-# load data
+"""load data"""
 engine = create_engine('sqlite:///../data/DisasterResponse.db')
 df = pd.read_sql_table('DisasterResponse', engine)
 
-# load model
+"""load model"""
 # real model from GridSearchCV classifier
 model = joblib.load("../models/classifier.pkl")
-# test model from pipeline classifier
+# test model from pipeline classifier commented out in production
 #model = joblib.load("../models/classifier_p.pkl")
 
-# index webpage displays cool visuals and receives user input text for model
+"""index webpage displays cool visuals and receives user input text for model"""
 @app.route('/')
 @app.route('/index')
 def index():
