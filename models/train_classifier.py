@@ -40,8 +40,8 @@ def load_data():
     engine = create_engine('sqlite:///' + database_filepath)
     df = pd.read_sql("SELECT * FROM DisasterResponse", engine)
     X = df.message.values
-    y = df.iloc[:, 5:].values
-    category_names = list(df.columns)[5:]
+    y = df.iloc[:, 4:].values
+    category_names = list(df.columns)[4:]
     return X, y, category_names
 
 
@@ -78,7 +78,7 @@ def build_model():
         'clf__estimator__min_samples_split': [2, 4]
         }
     # define GridSearchCV optimisation
-    model = GridSearchCV(pipeline, param_grid=parameters, cv = 2)
+    model = GridSearchCV(pipeline, param_grid=parameters)
     
     # secondary basic pipeline model 
     # trains quicker than GridSearchCV, used for debugging rest of code
@@ -107,6 +107,7 @@ def save_model(model, model_filepath):
     model_filepath = sys.argv[2]
     model = build_model()
     pickle.dump(model,open(model_filepath, "wb"))
+
     
 def main():
     if len(sys.argv) == 3:
