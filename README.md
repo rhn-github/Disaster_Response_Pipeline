@@ -9,10 +9,12 @@ Udacity Nanodegree Data Scientist, Disaster Response Pipeline Project
 
 <a id='intro'></a>
 ### Introduction:
-In this project, I have analyzed disaster data from [Figure Eight](https://www.figure-eight.com/) to build a model for an API that classifies disaster messages.<br>
+In this project, I have analyzed disaster data from [Figure Eight](https://www.figure-eight.com/) to build a machine learning model for an API that categorizes disaster messages, so that they can be sent to the appropriate disaster relief agency.<br><br>
 (Note that Figure Eight is now owned by [Appen](https://appen.com/)).
-
-The output of the analysis can be applied in a web app that will predict disaster categories based on message content.<br><br>
+<br><br>
+This can be of benefit because it means that the necessary information can be sent to the appopriate relief agency, Right First Time, which means that the best assistance can be given in the quickest time; with time not being wasted by sending the wrong assistance to a particular situtaion.
+The model has been installed into the back end of a web app, which the user can use to input the recieved message to get recommendations as to which Agency is best positioned to respond, based on the predictions provided by the model.
+<br><br>
 ![image info](./additional_information/classifier.png)<br><br>
 Additionally the web app presents information from the Test Data with visualisations as follows:
 ![image info](./additional_information/genres.png)
@@ -145,7 +147,7 @@ For the basic pipeline training time of about 5 minutes was observed, whilst for
 
 Comparing the results shows that only small increases in accuracy are achieved using GridSearchCV compared to the basic pipeline with this data, in spite of the significantly longer training times.
 
-This would suggest that with quicker training times, the basic pipeline model would be adequate for use with this data. This is perhaps not surprising when one considers that the message data originates from victims and aid workers reporting from the chaos that is a disaster zone, and is therefore likely to be full of anomalies and inaccuracies
+This might suggest that with quicker training times, the basic pipeline model would be adequate for use with this data. However before deciding on this, thorough testing of the app using the different models in the back end would be required.
 
 
 <a id='credits'></a>
@@ -153,5 +155,5 @@ This would suggest that with quicker training times, the basic pipeline model wo
 Credit is due to 
 * [Figure Eight/Appen](https://appen.com/) for providing the Data
 * Udacity for providing the learning environment and training material
-* Rajat S & Survesh C of Udacity's Mentor teams whose guidance has helped me join the dots to understand this process...
+* Rajat S of Udacity's Mentor teams who's guidance has helped me join the dots to understand this process...
 
