@@ -12,8 +12,8 @@ Udacity Nanodegree Data Scientist, Disaster Response Pipeline Project
 In this project, I have analyzed disaster data from [Figure Eight](https://www.figure-eight.com/) to build a model for an API that classifies disaster messages.<br>
 (Note that Figure Eight is now owned by [Appen](https://appen.com/)).
 
-The output of the analysis can be applied in a web app that will predict disaster categories based on message content.
-![image info](./additional_information/classifier.png)
+The output of the analysis can be applied in a web app that will predict disaster categories based on message content.<br><br>
+![image info](./additional_information/classifier.png)<br><br>
 Additionally the web app presents information from the Test Data with visualisations as follows:
 ![image info](./additional_information/genres.png)
 * Genres:
