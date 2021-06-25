@@ -65,8 +65,8 @@ def index():
     # rest
     category_sum_rest = category_sum[10:].sum()
     # create new series top 10 classes plu the rest
-    values_top_rest = pd.Series(category_sum_10).append(pd.Series(category_sum_rest))
-    categs_top_rest = pd.Series(categories_10).append(pd.Series(['rest']))
+    values_top_rest = pd.Series(category_sum_10).append(pd.Series(category_sum_rest), ignore_index = True)
+    categs_top_rest = pd.Series(categories_10).append(pd.Series(['rest']), ignore_index = True)
     
     
     # create visuals
